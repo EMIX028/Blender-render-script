@@ -1,36 +1,27 @@
 import bpy
 import os
 import time
-import tkinter
-import tkinter.filedialog as tkFileDialog
+import sys
 
-
-def exp_doss():
-    dossier = tkFileDialog.askdirectory(title="Choisir le répertoire cible")
-    if dossier:
-        return dossier
-    else: 
-        print("Aucun chemin renvoyé")
-        sys.exit(1)
 
 #Dossier d'output
-output_dir = exp_doss()
+output_dir = sys.argv[-1]
 os.makedirs(output_dir, exist_ok=True)
 
 #fichier Log
 log_file = os.path.join(output_dir, "log.txt")
 
 scene = bpy.context.scene
-#scene.render.engine = 'BLENDER_EEVEE_NEXT'  # ou 'CYCLES'
+scene.render.engine = 'BLENDER_EEVEE_NEXT'  # ou 'CYCLES'
 scene.render.image_settings.file_format = 'PNG' #format de sortie
 
 ranges = []
 
-Plages = input("Enter the frames like this: FrameX>frameY-frameY+1>frameZ for example\n").split("-")
+Plages = input("\n\nEnter the frames like this: FrameX>frameY-frameY+1>frameZ for example\n\n").split("-")
 try:
     for el in Plages:
         frm = el.split(">")
-        assert(len(frm)==2,"A frame range can only go from one frame to another (Frame0>Frame5 for example)")
+        assert(frm[0]>frm[1],"\nthe second frame has to be superior than first frame\n")
         ranges.append((int(frm[0]),int(frm[1])))
 except:
     print("\nERROR : a numeric value is required for frames\n")
