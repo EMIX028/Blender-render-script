@@ -3,7 +3,7 @@ import os
 import time
 
 #Dossier d'output
-output_dir = "C:/Users/User/Downloads/render/"
+output_dir = "DIRECTORY"
 os.makedirs(output_dir, exist_ok=True)
 
 #fichier Log
@@ -15,14 +15,14 @@ scene.render.image_settings.file_format = 'PNG' #format de sortie
 
 ranges = []
 
-Plages = input("Entrez les frames de cette façon Framex>framey-framey+1>framez par exemple\n").split("-")
+Plages = input("Enter the frames like this: FrameX>frameY-frameY+1>frameZ for example\n").split("-")
 try:
     for el in Plages:
         frm = el.split(">")
-        assert(len(frm)==2,"Une plage de frame ne peut aller que d'une frame à une autre (Frame0>Frame5 par exemple)")
+        assert(len(frm)==2,"A frame range can only go from one frame to another (Frame0>Frame5 for example)")
         ranges.append((int(frm[0]),int(frm[1])))
 except:
-    print("\nERROR : Digit value needed\n")
+    print("\nERROR : a numeric value is required for frames\n")
 
 frames_to_render = set()
 for start, end in ranges:
