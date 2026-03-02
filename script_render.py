@@ -1,16 +1,27 @@
 import bpy
 import os
 import time
+import tkinter
+import tkinter.filedialog as tkFileDialog
+
+
+def exp_doss():
+    dossier = tkFileDialog.askdirectory(title="Choisir le répertoire cible")
+    if dossier:
+        return dossier
+    else: 
+        print("Aucun chemin renvoyé")
+        sys.exit(1)
 
 #Dossier d'output
-output_dir = "DIRECTORY"
+output_dir = exp_doss()
 os.makedirs(output_dir, exist_ok=True)
 
 #fichier Log
 log_file = os.path.join(output_dir, "log.txt")
 
 scene = bpy.context.scene
-scene.render.engine = 'BLENDER_EEVEE_NEXT'  # ou 'CYCLES'
+#scene.render.engine = 'BLENDER_EEVEE_NEXT'  # ou 'CYCLES'
 scene.render.image_settings.file_format = 'PNG' #format de sortie
 
 ranges = []
